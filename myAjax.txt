@@ -1,0 +1,61 @@
+/*
+//跨域解决方案 在config/index.js里的dev里设置
+proxyTable: {
+      '/api': {
+        target: 'http://localhost:9000',//设置你调用的接口域名和端口号 别忘了加http
+        changeOrigin: true,
+        pathRewrite: {
+          '^/api': '/api'//这里理解成用‘/api’代替target里面的地址，后面组件中我们掉接口时直接用api代替 比如我要调用'http://40.00.100.100:3002/user/add'，直接写‘/api/user/add’即可
+        }
+      }
+    }
+*/
+/*
+//在actions中调用
+async getMyJson({ commit, state }) {
+        const result = await ajax('https://www.easy-mock.com/mock/5d0540849f9ab722fe745164/example_copy/')
+        console.log(result)
+        const myJson = result.data
+        commit('getMyJson', myJson)
+    }
+*/
+import axios from 'axios'
+import qs from 'qs'
+export default function ajax(url = '', data = {}, type = 'get') {
+    type = type.toLocaleLowerCase()
+    return new Promise((resolve, reject) => {
+        let promise
+        if (type === 'get') {
+            /*  let dataStr = ''     //手动拼接url
+             Object.keys(data).forEach(key => {
+                 dataStr += key + '=' + data[key] + '&'
+             })
+             if (dataStr !== '') {
+                 dataStr = dataStr.substring(0, dataStr.lastIndexOf('&'))
+                 url = url + '?' + dataStr
+             } */
+            promise = axios.get(url, {
+                params: {
+                    ...data,
+                }
+            })
+        } else {
+            /*  let params = new URLSearchParams();
+             Object.keys(data).forEach(key => {
+                 params.append(key, obj[key])
+             })  //兼容性不好 */
+            //使用qs模块(axios中自带),使用qs.stringify()序列化params
+            let params = qs.stringify(data)
+            promise = axios.post(url, params, {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            })
+        }
+        promise.then(res => {
+            resolve(res)
+        }).catch(err => {
+            reject('err', err)
+        })
+    })
+}

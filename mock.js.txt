@@ -1,0 +1,60 @@
+//npm install mockjs
+import Mock from 'mockjs';
+import ReadItem from './readItem.vue';
+var data = Mock.mock(/hello\.json/, {
+	// 属性 list 的值是一个数组，其中含有 1 到 10 个元素
+	'list|1-10': [
+		{
+			'id|+1': 1,
+			email: '@EMAIL'
+		}
+	]
+});
+//'@EMAIL'==Random.email()
+var Random = Mock.Random;
+var data1 = Mock.mock({
+	'id|+1': 1,
+	email: '@EMAIL',
+	color: Random.color(),
+	date: Random.date(),
+	time: Random.time(),
+	month: Random.now('yyyy-MM-dd HH:mm'),
+	段落: Random.cparagraph(1, 3),
+	句子: Random.csentence(6),
+	word: Random.word(5),
+	汉子: Random.cword('零一二三四五六七八九十', 3),
+	title: Random.title(),
+	中文标题: Random.ctitle(5, 8),
+	英文名: Random.first(),
+	中文姓: '@cfirst',
+	中文名: Random.clast(),
+	中文姓名: Random.cname(),
+	image: Random.image('200x100', '#00405d', '#FFF', 'png', 'Mock.js'),
+	图片编码: Random.dataImage('200x100', 'hello'),
+	url: Random.url('https'),
+	域名: Random.domain(),
+	顶级域名: Random.tld(),
+	ip: Random.ip(),
+	'（中国）大区': Random.region(),
+	省: Random.province(),
+	市: Random.city(),
+	'市(true)': Random.city(true),
+	邮政编码: Random.zip(),
+	首字母大写: Random.capitalize('hello'),
+	全部转大写: Random.upper('hello'),
+	全部转小写: Random.lower('HELLO'),
+	数组随机取一个值: Random.pick(['a', 'e', 'i', 'o', 'u']),
+	数组打乱顺序: Random.shuffle(['a', 'e', 'i', 'o', 'u']),
+	'18位id': Random.id()
+});
+var template = {
+	'key|1-10': '★'
+};
+var data = {
+	key: 'value2'
+};
+var a = Mock.valid(template, data);
+var b = Mock.toJSONSchema(template);
+console.log(JSON.stringify(data1, null, 4));
+console.log(a);
+console.log(b);

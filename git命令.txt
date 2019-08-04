@@ -1,0 +1,150 @@
+639da5ee35338ebcdab1415aa05400ff
+1.下载git并按照 （next...）
+  检查：右键多两个菜单
+2.进行配置
+  git config --global user.name ***
+  git config --global user.email ***
+
+  通过git config --list 查看配置信息
+3.常用命令
+  1.初始化仓库    git init
+  2.添加文件到仓库中
+    2.1添加到暂存区    git add 文件名
+    2.2提交到仓库       git commit –m “描述”
+
+
+  查看git状态    git status
+
+  对比修改的内容
+
+  查看历史记录
+  历史提交           git log  
+                     git log --pretty=oneline
+  回退版本           git reset --hard HEAD^
+                     git reset --hard 版本号
+
+  查看历史           git reflog
+
+场景：
+
+打开temp1.txt进行修改，执行命令add提交到暂存区，先不要commit。
+执行git status 观察状态
+再打开temp1.txt二次修改，直接执行命令commit提交，
+再执行git status观察状态 发现跟刚刚一直
+说明commit只是把暂存区的内容提交到本地仓库。
+
+
+撤销工作区修改
+   git checkout 文件名 
+
+   使用场景： 当不小心对工作区进行了不必要的修改时 （新增文件，删除文件，修改文件）
+
+撤销暂存区及工作区
+   1.git reset HEAD 文件名   （回到工作区）
+   2.git checkout 文件名 
+  
+撤销master仓库
+   git reset --hard HEAD^
+   git reset --hard 版本号
+
+
+删除文件
+ 1.误删除
+   工作区不小心删除掉了，但是master仓库中仍然存在
+   
+   git checkout 文件名 
+ 2.需要删除
+   git rm 文件名
+   git commit -m '描述'
+
+ 
+
+第一步：本地创建sshkey：
+        ssh-keygen –t rsa –C"lihanying_vin@163.com"    (连续敲几次回车)
+
+        执行成功后，本地用户目录下，会多出一个.ssh文件夹
+
+第二步：打开github网站，注册并登录进去
+        点击头像菜单栏找到 settings --> SSH and GPG keys --> New SSH key
+        输入title：自定义名称
+            key: 打开本地.ssh文件夹下id_rsa.pub文件，将内容粘贴进去
+           
+
+本地项目关联到github中
+1.先确保本地已经有一个项目了
+2.在github中点击头像下菜单找到Your repositories --> new  新建远程仓库 
+3.将远程仓库与本地仓库进行关联
+  git remote add origin git@github.com:hedyLi/temp2801.git
+4.将本地内容推送到远程仓库中
+  git push -u origin master
+  下一次推送时 git push origin master
+
+
+
+下载(克隆)github中的项目
+
+1.新建项目时需要勾选Initialize this repository with a README
+2.创建好后，复制github上地址，本地执行git clone git@github：heayLi/temp.git
+3.进入到仓库内后续步骤
+  ...
+    git push -u origin master
+  下一次推送时 git push origin master
+
+
+---------------------分支相关操作--------------------
+查看分支： git branch 
+创建分支： git branch <名称>
+切换分支： git checkout <名称>
+创建并切换分支：git checkout -b <名称>
+合并分支：git merge <名称>
+删除分支：git branch -d <名称>
+
+
+【无冲突】
+1.github上创建一个项目，本地进行clone
+2.添加一个文件temp1.txt，并push提交到github上。
+3.查看当前分支，master 
+4.创建子分支 lisi 并切换到lisi分支 ，对temp1.txt进行修改，提交到lisi仓库中（add,commit）
+5.切换回主分支，进行合并分支
+6.删除lisi分支
+7.push到github上，这是temp1.txt的内容已被修改。
+
+
+【有冲突】
+1.github上创建一个项目，本地进行clone
+2.添加一个文件temp1.txt，并push提交到github上。
+3.查看当前分支，master 
+4.创建子分支 lisi 并切换到lisi分支 ，对temp1.txt进行修改为abc，提交到lisi仓库中（add,commit）
+5.切换回主分支，修改temp1.txt为dce,提交到master仓库中（add,commit）
+6.进行合并分支（需要手动解决冲突）并重新提交到master仓库中
+7.删除lisi分支
+8.push到github上，这时temp1.txt的内容已被修改。
+
+
+
+-----------------------标签-------------------------
+创建标签      git tag 标签名称
+查看所有标签  git tag
+创建带有说明的标签 git tag -a 标签名称 -m 描述信息
+查看标签说明  git show 标签名称
+删除标签 git tag -d 标签名称
+推送一个本地标签： git push origin 标签名称
+推送全部本地标签： git push origin --tags
+删除远程标签： git push origin :refs/tags/标签名称
+
+
+--------------------------------------
+
+1.A程序员先在github上创建一个空项目
+2.A将已有代码可以push到master分支上
+3.B用户clone所有代码到本地，如果直接push会报错！！！开始第四步
+4.A添加合作者B（合作者B会收到邮件进行确认）  --- 重要 否则B无法push到a创建的项目中
+  待B同意后，再在B程序员电脑上执行 git push origin master 输入用户名和密码 就不会报错了
+ 
+
+
+ 
+
+
+
+   
