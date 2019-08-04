@@ -1,0 +1,26 @@
+{
+    "Print to console": {
+        "prefix": "vue",
+        "body": [
+            "<template>",
+            "<div>$5</div>",
+            "</template>",
+            "",
+            "<script>",
+            "export default {",
+            "components: {},",
+            "data() {",
+            "return {}",
+            "},",
+            "computed: {},",
+            "methods: {},",
+            "mounted() {},",
+            "}",
+            "</script>",
+            "<style lang='less' scoped>",
+            "//@import url($3); 引入公共css类",
+            "</style>"
+        ],
+        "description": "Log output to console"
+    }
+}
