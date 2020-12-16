@@ -1,0 +1,122 @@
+<template>
+  <div>
+    <div class="myDropdown">
+      <div class="tit" @click="clickTit">{{ curr.text }}</div>
+      <div class="list">
+        <div
+          :class="{ item: true, active: item.active }"
+          v-for="(item, index) in option1"
+          :key="index"
+          @click="choose(item)"
+        >
+          <div class="title">
+            <span>{{ item.text }}</span>
+          </div>
+          <div class="value">
+            <i
+              :class="[
+                'van-icon',
+                'van-dropdown-item__icon',
+                { 'van-icon-success': item.active },
+              ]"
+            ></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  components: {},
+  data() {
+    return {
+      option1: [
+        { text: "全部商品", value: 0, active: true },
+        { text: "新款商品", value: 1, active: false },
+        { text: "活动商品", value: 2, active: false },
+      ],
+      curr: {
+        text: "5555",
+      },
+    };
+  },
+  computed: {},
+  methods: {
+    clickTit() {
+      let ele = document.querySelector(".list");
+      let computedStyle = document.defaultView.getComputedStyle(ele, null);
+      let status = computedStyle.display;
+      if (status === "block") {
+        ele.style.display = "none";
+      } else {
+        ele.style.display = "block";
+      }
+    },
+    choose(item) {
+      this.option1.map((ele) => {
+        ele.active = false;
+      });
+      // console.log(item.text);
+      this.curr = item;
+      item.active = true;
+      document.querySelector(".list").style.display = "none";
+    },
+  },
+  mounted() {},
+};
+</script>
+<style lang='less' scoped>
+//@import url(); 引入公共css类
+.myDropdown {
+  .tit {
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+    height: 48px;
+    background-color: #fff;
+    box-shadow: 0 2px 12px rgba(100, 101, 102, 0.12);
+  }
+  .list {
+    display: none;
+    transition: transform 0.3s;
+    transition-duration: 0.2s;
+    z-index: 2018;
+    .item {
+      position: relative;
+      display: flex;
+      box-sizing: border-box;
+      width: 100%;
+      padding: 10px 16px;
+      overflow: hidden;
+      color: #323233;
+      font-size: 14px;
+      line-height: 24px;
+      background-color: #fff;
+      &::after {
+        position: absolute;
+        box-sizing: border-box;
+        content: " ";
+        pointer-events: none;
+        right: 16px;
+        bottom: 0;
+        left: 16px;
+        border-bottom: 1px solid #ebedf0;
+        transform: scaleY(0.5);
+      }
+      .title {
+        flex: 1;
+        text-align: left;
+      }
+      .value {
+        flex: 1;
+        text-align: right;
+      }
+    }
+    .active {
+      color: #ee0a24;
+    }
+  }
+}
+</style>
